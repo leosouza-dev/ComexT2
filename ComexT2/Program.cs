@@ -26,7 +26,7 @@ void ExibirLogo()
 async Task ExibirOpcoesDoMenu()
 {
     ExibirLogo();
-    Console.WriteLine("\nDigite 1 Criar Produto");
+    Console.WriteLine("\nDigite 1 Criar Produtx");
     Console.WriteLine("Digite 2 Listar Produtos");
     Console.WriteLine("Digite 3 Consultar API Externa");
     Console.WriteLine("Digite -1 para sair");
