@@ -2,7 +2,34 @@
 using ComexT2.Modelos;
 using System.Text.Json;
 
-var listaProdutos = new List<Produto>();
+var listaPedidos = new List<Pedido>();
+var listaProdutos = new List<Produto>
+{
+    new Produto("Notebook")
+    {
+        Descricao = "Notebook Dell Inspiron",
+        PrecoUnitario = 3500.00,
+        Quantidade = 10
+    },
+    new Produto("Smartphone")
+    {
+        Descricao = "Smartphone Samsung Galaxy",
+        PrecoUnitario = 1200.00,
+        Quantidade = 25
+    },
+    new Produto("Monitor")
+    {
+        Descricao = "Monitor LG Ultrawide",
+        PrecoUnitario = 800.00,
+        Quantidade = 15
+    },
+    new Produto("Teclado")
+    {
+        Descricao = "Teclado Mecânico RGB",
+        PrecoUnitario = 250.00,
+        Quantidade = 50
+    }
+};
 
 void ExibirLogo()
 {
@@ -29,6 +56,8 @@ async Task ExibirOpcoesDoMenu()
     Console.WriteLine("\nDigite 1 Criar Produtx");
     Console.WriteLine("Digite 2 Listar Produtos");
     Console.WriteLine("Digite 3 Consultar API Externa");
+    Console.WriteLine("Digite 4 Criar Pedido");
+    Console.WriteLine("Digite 5 Listar Pedidos");
     Console.WriteLine("Digite -1 para sair");
 
     Console.Write("\nDigite a sua Opção: ");
@@ -46,6 +75,12 @@ async Task ExibirOpcoesDoMenu()
         case 3:
             await ConsultarApiExterna();
             break;
+        case 4:
+            await CriarPedido();
+            break;
+        case 5:
+            await ListarPedidos();
+            break;
         case -1:
             Console.WriteLine("Finalizando!!!");
             break;
@@ -53,6 +88,69 @@ async Task ExibirOpcoesDoMenu()
             Console.WriteLine("Opção inválida!!!");
             break;
     }
+}
+
+async Task CriarPedido()
+{
+    Console.Clear();
+    Console.WriteLine("Criando um novo pedido\n");
+
+    Console.WriteLine("Digite o nome do Cliente: ");
+    string nomeCliente = Console.ReadLine();
+    var cliente = new Cliente();
+    cliente.Nome = nomeCliente;
+
+    var pedido = new Pedido(cliente);
+
+    while (true)
+    {
+        Console.WriteLine("\nProdutos Disponiveis: ");
+        for (int i = 0; i < listaProdutos.Count; i++)
+        {
+            Console.WriteLine($"{i + 1} - {listaProdutos[i].Nome}");
+        }
+
+        Console.WriteLine("Digite o número do produto que deseja adicionar (0 para sair): ");
+        int numeroProduto = int.Parse(Console.ReadLine());
+        if (numeroProduto == 0) 
+        { 
+            break;
+        }
+
+        var produto = listaProdutos[numeroProduto - 1];
+
+        Console.WriteLine("Digite a quntidade desejada: ");
+        var quantidade = int.Parse(Console.ReadLine());
+
+        var itemDePedido = new ItemPedido(produto, quantidade);
+        pedido.AdicionarItem(itemDePedido);
+        Console.WriteLine($"{itemDePedido} - adicionado com sucesso!\n");
+        
+    }
+    listaPedidos.Add(pedido);
+    Console.WriteLine($"{pedido} - criado com sucesso!\n");
+    Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
+    Console.ReadKey();
+    Console.Clear();
+    await ExibirOpcoesDoMenu();
+}
+
+async Task ListarPedidos()
+{
+    Console.Clear();
+    Console.WriteLine("Listando todos os pedidos da nossa aplicação: ");
+
+    var pedidosOrdanados = listaPedidos.OrderBy(p => p.Cliente.Nome).ToList();
+
+    foreach (var pedido in pedidosOrdanados)
+    {
+        Console.WriteLine($"Pedido: {pedido}");
+    }
+
+    Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
+    Console.ReadKey();
+    Console.Clear();
+    await ExibirOpcoesDoMenu();
 }
 
 async Task ConsultarApiExterna()
