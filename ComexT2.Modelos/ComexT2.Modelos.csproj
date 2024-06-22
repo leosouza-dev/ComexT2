@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>Classes modelos do projeto COMEX.</Title>
+    <Authors>leosouzadev</Authors>
+    <Company>COMEX</Company>
+    <Description>Projeto que possui Classes modelos do Projeto COMEX.</Description>
+  </PropertyGroup>
+
+</Project>
