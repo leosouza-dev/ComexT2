@@ -15,6 +15,8 @@ namespace ComexT2.Tests.Modelos
 
             //Assert
             Assert.Equal(cliente, pedido.Cliente);
+            // Assert.Equal(DateTime.Now, pedido.Data);
+            Assert.True((DateTime.Now - pedido.Data).TotalSeconds < 1);
             Assert.Empty(pedido.Itens);
             Assert.Equal(0, pedido.Total);
         }
